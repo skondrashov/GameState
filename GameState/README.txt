@@ -1,8 +1,9 @@
 Last updated: July 6, 2012
 	
 GameState Javascript HTML5 video game development library documentation	
-	
-				Copyright (C)  2012  Timofey Kondrashov
+	https://github.com/Timaster/GameState
+	Copyright (C)  2012  Timofey Kondrashov
+
     Permission is granted to copy, distribute and/or modify this document
     under the terms of the GNU Free Documentation License, Version 1.3
     or any later version published by the Free Software Foundation;
