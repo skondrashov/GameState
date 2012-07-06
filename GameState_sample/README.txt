@@ -1,0 +1,1 @@
+This is a sample game created using the GameState HTML5 Game Development Library.

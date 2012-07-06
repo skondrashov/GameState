@@ -1,5 +1,6 @@
 	GameState - Javascript library for HTML5 video game development
-				Copyright (C) 2012  Timofey Kondrashov
+	https://github.com/Timaster/GameState
+	Copyright (C) 2012  Timofey Kondrashov
 
 	The GameState library is the work of me, Timofey Kondrashov, with the
 	notable exception of the request_animation_frame.js file, as well as
@@ -7,6 +8,8 @@
 	here and there. If there is any issue with me copying your code, or
 	otherwise infringing your rights, it is almost certainly imagined,
 	but you may feel free to email me at timaster@gmail.com.
+	Please make a copy of GAMESTATE_LICENSE.txt, included with this
+	library, easily visible with any games you release with this library.
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

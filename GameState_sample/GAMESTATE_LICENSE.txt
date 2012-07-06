@@ -1,5 +1,6 @@
 	GameState - Javascript library for HTML5 video game development
-			Copyright (C) 2012  Timofey Kondrashov
+	https://github.com/Timaster/GameState
+	Copyright (C) 2012  Timofey Kondrashov
 
 	This game was created with the GameState library.
 
