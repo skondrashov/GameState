@@ -55,7 +55,7 @@ function TitleMode(gs) {
 	// SCREENS
 	function titleScreen() {
 		if (gs.mousePressed) {
-			var button = gs.getCollision(gs.mousePressed[0],gs.mousePressed[1]);
+			var button = gs.getCollision(gs.mousePosition[0],gs.mousePosition[1]);
 			switch (button)
 			{
 			case 'play':
