@@ -1,0 +1,33 @@
+Game Music
+	Sawah by Elerya < http://opengameart.org/content/sawah >
+	Licensed under CC-BY 3.0 < http://creativecommons.org/licenses/by/3.0/ >
+Title Music
+	Snow May Never End by Sindwiller < http://opengameart.org/content/snow-may-never-end >
+	Licensed under CC-BY-SA 3.0 < http://creativecommons.org/licenses/by-sa/3.0/ >
+
+Menu Click
+	Zippo Click Sound by Dawith < http://opengameart.org/content/zippo-click-sound >
+	Public Domain
+Coin Collect
+	Inventory Sound Effects by Artisticdude < http://opengameart.org/content/inventory-sound-effects >
+	Licensed under CC-BY-SA 3.0 < http://creativecommons.org/licenses/by-sa/3.0/ >
+	Licensed under GPLv3 < http://www.gnu.org/licenses/gpl-3.0.html >
+
+Grass Tiles
+	Grass by Lanea Zimmerman (AKA Sharm) < http://lpc.opengameart.org/static/lpc-style-guide/assets.html >
+	Licensed under CC-BY-SA 3.0 < http://creativecommons.org/licenses/by-sa/3.0/ >
+	Licensed under GPLv3 < http://www.gnu.org/licenses/gpl-3.0.html >
+Coin Sprite 
+	Animated Coins by Clint Bellanger for Liberated Pixel Cup < http://opengameart.org/content/animated-coins >
+	Licensed under CC-BY-SA 3.0 < http://creativecommons.org/licenses/by-sa/3.0/ >
+	Licensed under GPLv3 < http://www.gnu.org/licenses/gpl-3.0.html >
+Character Sprite
+	2 Characters by Pennomi < http://opengameart.org/content/lpc-2-characters >
+	Licensed under CC-BY-SA 3.0 < http://creativecommons.org/licenses/by-sa/3.0/ >
+	Licensed under GPLv3 < http://www.gnu.org/licenses/gpl-3.0.html >
+
+Game Engine
+	GameState by Timofey Kondrashov < http://opengameart.org/forumtopic/a-well-documented-html5-library-for-use-in-the-contest >
+
+Everything else is by me, Timofey Kondrashov, and I hereby release it into the public domain to the full extent permissible by law.
+Use it for whatever wherever.

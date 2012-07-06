@@ -1,0 +1,24 @@
+GameState.spriteInfo = {
+	"sprite1":{
+		"anim1":{
+			"next":"",
+			"images":1,
+			"durations":[0],
+			"offsets":[[0,0]]
+		},
+		"anim2":{
+			"next":"",
+			"images":1,
+			"durations":[0],
+			"offsets":[[0,0]]
+		},
+	},
+	"sprite2":{
+		"anim1":{
+			"next":"",
+			"images":1,
+			"durations":[0],
+			"offsets":[[0,0]]
+		}
+	}
+};

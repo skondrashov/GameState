@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Example GameState Game</title>
+		<link rel="stylesheet" type="text/css" href="style.css"></link>
+
+		<!-- The GameState library -->
+		<script type="text/javascript" src="js/GameState/request_animation_frame.js"></script>
+		<script type="text/javascript" src="js/GameState/game_state.js"></script>
+		<script type="text/javascript" src="js/GameState/resources.js"></script>
+		<script type="text/javascript" src="js/GameState/sprite.js"></script>
+		<script type="text/javascript" src="js/GameState/animation.js"></script>
+
+		<!-- modes for use with GameState -->
+		<script type="text/javascript" src="js/modes/loading_mode.js"></script>
+		<script type="text/javascript" src="js/modes/title_mode.js"></script>
+		<script type="text/javascript" src="js/modes/play_mode.js"></script>
+		
+		<!-- game classes -->
+		<script type="text/javascript" src="js/classes/tile_map.js"></script>
+		<script type="text/javascript" src="js/classes/character.js"></script>
+		<script type="text/javascript" src="js/classes/coin.js"></script>
+		
+		<!-- the information for loading sprites into the game -->
+		<script type="text/javascript" src="js/sprite_info.js"></script>
+		
+		<!-- contains main(), which is the starting point for the game logic -->
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript">
+			function debug(s) {
+				if (s === 'clear')
+					document.getElementById('debug').innerHTML='';
+				else {
+					var e = document.createElement('p');
+					e.innerHTML = s;
+					document.getElementById('debug').appendChild(e);
+				}
+			}
+		</script>
+	</head>
+	<body onload="main()">
+		<div id="debug"></div>
+		<div id="game_container"><noscript>You have javascript turned off, or your browser doesn't support javascript. You need javascript for this game to run. Sorry! :(</noscript></div>
+	</body>
+</html>
