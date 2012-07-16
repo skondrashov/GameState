@@ -1,4 +1,5 @@
 GameState.Sprite = function(anims) {
+	"use strict";
 	var numAnims = anims.length;
 	var curAnim;
 	var nextAnim;
@@ -15,10 +16,5 @@ GameState.Sprite = function(anims) {
 		nextAnim = curAnim.nextFrame();
 		if (nextAnim)
 			this.setAnim(nextAnim);
-	};
-
-	this.destroy = function() {
-		delete anims;
-		delete this;
 	};
 };

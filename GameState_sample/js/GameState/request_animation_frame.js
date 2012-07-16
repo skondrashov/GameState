@@ -6,6 +6,7 @@
 // truncated for use in his app by Timofey Kondrashov
  
 (function() {
+	"use strict";
     var vendors = ['ms', 'moz', 'webkit', 'o'];
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
         window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];

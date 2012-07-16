@@ -1,3 +1,4 @@
+"use strict";
 GameState.prototype.getImage = function(imageName) {
 	var img;
 	img = new Image();
@@ -30,9 +31,9 @@ GameState.prototype.getSong = function(songName) {
 };
 
 GameState.prototype.getSprite = function(spriteName) {
-	var anims = {};
-	var info = GameState.spriteInfo[spriteName];
-	var img, imgs;
+	var anims = {},
+		info = GameState.spriteInfo[spriteName],
+		img, imgs, anim, k;
 	for (anim in info) {
 		imgs = new Array();
 		for (k=0; k<info[anim].images; k++) {
