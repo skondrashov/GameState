@@ -1,4 +1,5 @@
 function Character(x,y,gs) {
+	"use strict";
 	var sprite = gs.getSprite('character');
 	var direction = 0;						// right, up, left, down == 0, 1, 2, 3
 	sprite.setAnim('idleeast');
@@ -80,9 +81,5 @@ function Character(x,y,gs) {
 			y = 0;
 		else if (y>gs.getHeight()-50)
 			y = gs.getHeight()-50;
-	};
-
-	this.destroy = function() {
-		sprite.destroy();
 	};
 }

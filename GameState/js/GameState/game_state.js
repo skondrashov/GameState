@@ -14,11 +14,12 @@ function GameState(width, height, FRAME_RATE) {
 	gs.style = null;					// the handle for the style of the game container div
 
 	// PRIVATE
+	var
 	// ---framerate management---
 	// constants
-	// var FRAME_RATE						// frames per second
+		// FRAME_RATE						// frames per second
 	// variables
-	var currentScreen = null,				// stores the current loop of the game. null if nothing is set to run
+		currentScreen = null,				// stores the current loop of the game. null if nothing is set to run
 		time = null,						// a Date object storing the current time
 		oldTime = null,						// the time at which the last frame was run, as a Date object
 		timeRem = 0,						// if the game ends up taking more time than it should on a frame, it should try to catch up on subsequent frames.
@@ -29,8 +30,8 @@ function GameState(width, height, FRAME_RATE) {
 
 	// ---display resolution---
 	// variables
-	// var width						// width of the drawing buffer, in pixels. if the game resolution is changed, this number should adjust to accurately reflect the aspect ratio.
-	// var height						// height of the drawing buffer, in pixels. if the game resolution is changed this number will NOT change.
+		// width						// width of the drawing buffer, in pixels. if the game resolution is changed, this number should adjust to accurately reflect the aspect ratio.
+		// height						// height of the drawing buffer, in pixels. if the game resolution is changed this number will NOT change.
 											// instead, the canvas will be scaled so that the apparent height matches the resolution y value.
 											// these width and height numbers contrast with ctx.canvas.width and ctx.canvas.height, which are the size of the canvas as it is drawn on the screen
 											// width and height represent the space that the program has to draw on.
@@ -43,9 +44,9 @@ function GameState(width, height, FRAME_RATE) {
 	// user interaction
 		collisionMap = [],
 	// drawing
-		imgs = [],
 		currentMode = '',
-		layout = [];
+		layout = []
+	;
 
 	// *************FUNCTIONS*****************
 	// PUBLIC FUNCTIONS
@@ -120,13 +121,10 @@ function GameState(width, height, FRAME_RATE) {
 	}
 
 	function runFrame() {
-		imgs = [];
 		gs.ctx.clearRect(0, 0, width, height);
 		currentScreen();
 		gs.keysPressed = [];
 		gs.mousePressed = false;
-		if (imgs.length)
-			draw();
 	}
 
 	if (!window.requestAnimationFrame)
@@ -135,15 +133,13 @@ function GameState(width, height, FRAME_RATE) {
 	// this function begins the game loop using the current screen.
 	// once this function is run, the game should continue its logic through the use of its modes and screens
 	gs.start = function() {
-		if (!oldTime) {	// if oldTime is defined, that means start has already been called. We don't want to allow start to be called multiple times
+		if (!oldTime) {			// if oldTime is defined, that means start has already been called. We don't want to allow start to be called multiple times
 			oldTime = new Date();
 			checkFrame();
 		}
 	};
 
 	gs.loadMode = function(mode,modeName) {
-		if (modes[modeName])
-			modes[modeName].destroy();
 		modes[modeName]=mode;
 	};
 
@@ -157,47 +153,31 @@ function GameState(width, height, FRAME_RATE) {
 		modes[modeName].init();
 	};
 
-	Image.prototype.draw = function(x, y, flip, rotation, scaling) {
-		if (!scaling)
-			scaling = 1;
-		imgs.push([this,x,y,flip,rotation,scaling]);
-	};
-
 	Audio.prototype.stop = function() {
 		this.pause();
 		this.currentTime = 0;
 	};
 
-	Audio.prototype.destroy = function() {
-		delete this;
+	Audio.prototype.playSound = Audio.prototype.play;
+
+	Audio.prototype.play = function() {
+		if (this.currentTime)
+			this.currentTime = 0;
+		this.playSound();
 	};
 
-	Image.prototype.destroy = function() {
-		delete this;
+	gs.drawImage = function(img, x, y, flip, rotation, scaling) {
+		if (!flip)
+			flip = false;
+		if (!scaling)
+			scaling = 1;
+		gs.ctx.save();
+		gs.ctx.translate(x+scaling*img.width/2, y+scaling*img.height/2);
+		gs.ctx.rotate(rotation);
+		gs.ctx.scale(scaling*(1-2*flip),scaling);
+		gs.ctx.drawImage(img, -img.width/2, -img.height/2);
+		gs.ctx.restore();
 	};
-
-	function draw() {
-		var img;		// the image to be drawn
-		var x, y;		// coordinates of the upper left corner of the image
-		var rotation;	// angle of rotation
-		var flip;		// horizontal flip
-		var scaling;	// the scaling ratio of the image
-		for (k=0; k<imgs.length; k++)
-		{
-			img = imgs[k][0];
-			x = imgs[k][1];
-			y = imgs[k][2];
-			flip = imgs[k][3];
-			rotation = imgs[k][4];
-			scaling = imgs[k][5];
-			gs.ctx.save();
-			gs.ctx.translate(x+scaling*img.width/2,y+scaling*img.height/2);
-			gs.ctx.rotate(rotation);
-			gs.ctx.scale(scaling-scaling*2*flip,scaling);
-			gs.ctx.drawImage(img, -img.width/2, -img.height/2);
-			gs.ctx.restore();
-		}
-	}
 
 	gs.getWidth = function() {
 		return width;
@@ -243,105 +223,16 @@ function GameState(width, height, FRAME_RATE) {
 	};
 
 	gs.setLayout = function(layoutName) {
-		var obj, button;
-		gs.clearLayout();
-		for (button in GameState.layouts[currentMode][layoutName]) {
-			obj = GameState.layouts[currentMode][layoutName][button];
-			i = layout.length;
-			layout.push({});
-
-			layout[i].x = width/2 + obj.x;
-			if (obj.valign)
-				layout[i].y = height/2 + obj.y;
-			else
-				layout[i].y = obj.y;
-
-			if (obj.img) {
-				layout[i].img = gs.getImage(obj.img);
-				if (!obj.halign)
-					layout[i].x -= layout[i].img.width/2;
-				layout[i].y -= layout[i].img.height/2;
-			}
-			if (obj.txt) {
-				layout[i].size = obj.size;
-				gs.ctx.font=layout[i].size+"px Arial";
-				layout[i].txt = obj.txt;
-				if (!obj.halign)
-					layout[i].x -= gs.ctx.measureText(layout[i].txt).width/2;
-				layout[i].y -= layout[i].size/2;
-				if (obj.color)
-					layout[i].color = obj.color;
-				else
-					layout[i].color = "#FFFFFF";
-				layout[i].textbox = obj.textbox;
-			}
-
-			// some objects may not need any hitboxes. otherwise, do hitbox math
-			if (obj.hitbox) {
-				layout[i].hitbox = {};
-				if (typeof(obj.hitbox) === 'object') {
-					layout[i].hitbox = obj.hitbox;
-				}
-				else {
-					layout[i].hitbox.x = layout[i].hitbox.w = layout[i].x;
-					layout[i].hitbox.y = layout[i].hitbox.h = layout[i].y;
-					layout[i].hitbox.value = obj.hitbox;
-					if (layout[i].img) {
-						layout[i].hitbox.w += layout[i].img.width;
-						layout[i].hitbox.h += layout[i].img.height;
-					}
-					if (layout[i].txt) {
-						layout[i].hitbox.w += gs.ctx.measureText(layout[i].txt).width;
-						layout[i].hitbox.h += layout[i].size;
-					}
-				}
-			}
-		}
+		layout = [];
+		for (k in GameState.layouts[currentMode][layoutName])
+			layout[k] = new LayoutElement(GameState.layouts[currentMode][layoutName][k]);
 	};
 
-	gs.drawLayout = function() {
-		var measure, string;
-		for (k=0; k<layout.length; k++) {
-			if (layout[k].hitbox)
-				for (i=layout[k].hitbox.x; i<layout[k].hitbox.w; i++) {
-					for (j=layout[k].hitbox.y; j<layout[k].hitbox.h; j++) {
-						collisionMap[(0|j)*width+(0|i)]=layout[k].hitbox.value;
-					}
-				}
-			if (layout[k].img)
-				imgs.push([layout[k].img,layout[k].x,layout[k].y,false,0,1]);
-			if (layout[k].txt) {
-				gs.ctx.font=layout[k].size+"px Arial";
-				gs.ctx.textAlign="start";
-				gs.ctx.textBaseline="top";
-				gs.ctx.fillStyle=layout[k].color;
-				if (layout[k].textbox) {
-					i=0;
-					string=layout[k].txt;
-					while (string) {
-						measure=string;
-						if (gs.ctx.measureText(measure).width>layout[k].textbox) {
-							while (gs.ctx.measureText(measure).width>layout[k].textbox)
-								measure=measure.slice(0,-1);
-							if (measure.search(' ')>-1)
-								while (measure[measure.length-1]!=' ')
-									measure=measure.slice(0,-1);
-						}
-						string=string.slice(measure.length);
-						gs.ctx.fillText(measure,layout[k].x,layout[k].y+i);
-						i+=layout[k].size;
-					}
-				}
-				else
-					gs.ctx.fillText(layout[k].txt,layout[k].x,layout[k].y);
-			}
-		}
+	gs.drawLayoutElement = function(ID, override) {
+		layout[ID].draw(override);
 	};
 	
 	gs.clearLayout = function() {
-		for (i=0;i<layout.length;i++);
-		//	delete layout[i].hitbox;
-		//delete layout;
 		layout = [];
 	};
 
@@ -375,5 +266,180 @@ function GameState(width, height, FRAME_RATE) {
 		}
 		gs.ctx.putImageData(id,0,0);
 	};
+
+	function LayoutElement(obj) {
+		// we only declare the variables we need when we need them
+		// for example, images don't need to declare txt properties
+		var
+			//img, txt,
+			//size,
+			//color,
+			x, y,
+			//hitbox,
+			//textbox
+			output		// when we override the content of the element, we want to make sure not to make the override permanent. so, we use an extra variable to hold whatever the element is displaying
+		;
+		x = width/2 + obj.x;
+
+		if (obj.valign)
+			y = height/2 + obj.y;
+		else
+			y = obj.y;
+
+		if (obj.img) {
+			var img = gs.getImage(obj.img);
+			if (!obj.halign)
+				x -= img.width/2;
+			y -= img.height/2;
+		}
+		else if (obj.txt) {
+			var
+				size = obj.size,
+				txt = obj.txt,
+				color
+			;
+			gs.ctx.font = size + "px Arial";
+			if (!obj.halign)
+				x -= gs.ctx.measureText(txt).width/2;
+			y -= size/2;
+			if (obj.color)
+				color = obj.color;
+			else
+				color = "#FFFFFF";
+			if (obj.textbox)
+				var textbox = obj.textbox;
+		}
+
+		// some objects may not need any hitboxes. otherwise, do hitbox math
+		if (obj.hitbox) {
+			var hitbox = {};
+			if (typeof(obj.hitbox) === 'object') {
+				hitbox = obj.hitbox;
+			}
+			else {
+				hitbox.x = hitbox.w = x;
+				hitbox.y = hitbox.h = y;
+				hitbox.value = obj.hitbox;
+				if (img) {
+					hitbox.w += img.width;
+					hitbox.h += img.height;
+				}
+				else if (txt) {
+					hitbox.w += gs.ctx.measureText(txt).width;
+					hitbox.h += size;
+				}
+			}
+		}
+
+		this.draw = function(override) {
+			if (hitbox) {
+				for (i=hitbox.x; i<hitbox.w; i++) {
+					for (j=hitbox.y; j<hitbox.h; j++) {
+						collisionMap[(0|j)*width+(0|i)]=hitbox.value;
+					}
+				}
+			}
+
+			if (override)
+				output = override;
+			else if (img)
+				output = img;
+			else if (txt)
+				output = txt;
+
+			if (output instanceof Image)
+				gs.drawImage(output, x, y, false, 0, 1);
+			else {
+				gs.ctx.font = size + "px Arial";
+				gs.ctx.textAlign = "start";
+				gs.ctx.textBaseline = "top";
+				gs.ctx.fillStyle = color;
+				if (textbox) {
+					var measure, string;
+					i = 0;
+					string = output;
+					while (string) {
+						measure = string;
+						if (gs.ctx.measureText(measure).width > textbox) {
+							while (gs.ctx.measureText(measure).width > textbox)
+								measure = measure.slice(0, -1);
+							if (measure.search(' ') > -1)
+								while (measure[measure.length-1] !== ' ')
+									measure = measure.slice(0, -1);
+						}
+						string = string.slice(measure.length);
+						gs.ctx.fillText(measure, x, y+i);
+						i += size;
+					}
+				}
+				else
+					gs.ctx.fillText(output, x, y);
+			}
+		};
+	}
+	
+	this.Sprite = function(anims) {
+		var curAnim, nextAnim;
+
+		this.setAnim = function(animName) {
+			curAnim = anims[animName];
+			curAnim.reset();
+		};
+
+		this.draw = function(x,y,rotation,flip,scaling) {
+			curAnim.draw(x,y,rotation,flip,scaling);
+			nextAnim = curAnim.nextFrame();
+			if (nextAnim)
+				this.setAnim(nextAnim);
+		};
+	}
+	
+	this.Animation = function(frames, info) {
+		// frames - stores an array of the images that the animation consists of
+		// imgDurs - stores an array of the duration of each image in the animation
+		// imgOrgs - stores an array of the origins of each image in the animation
+		// the indices of each array correspond to each other; frames[n] lasts imgDurs[n] frames and has an origin of imgOrgs[n]
+		var
+			imgID = 0,
+			frameCount = 0,
+
+			nextName = info.next,
+			imgDurs = [],
+			imgOffs = []
+		;
+
+		for (k=0; k<info.images; k++) {
+			imgDurs.push(info.durations[k]);
+			imgOffs.push(new Array(2));
+			imgOffs[k][0] = info.offsets[k][0];
+			imgOffs[k][1] = info.offsets[k][1];
+		}
+
+		this.reset = function() {
+			imgID = 0;
+			frameCount = 0;
+		};
+
+		this.nextFrame = function() {
+			frameCount++;
+			if (frameCount>=imgDurs[imgID]) {
+				frameCount=0;
+				imgID++;
+				if (imgID==frames.length) {
+					imgID = 0;
+					return nextName;
+				}
+			}
+			return false; // if the animation is complete, this function returns the name of the next animation instead
+		};
+
+		this.draw = function(x,y,flip,rotation,scaling) {
+			if (!flip)
+				flip = false;
+			if (!scaling)
+				scaling = 1;
+			gs.drawImage(frames[imgID],x+imgOffs[imgID][0]-(imgOffs[imgID][0]*flip),y+imgOffs[imgID][1],flip,rotation,scaling);
+		};
+	}
 }
 GameState.layouts = {};

@@ -1,4 +1,5 @@
 function PlayMode(gs) {
+	"use strict";
 	var music = gs.getSong('game.ogg');
 	var tileMap = new TileMap(gs);
 	var coins = new Array(5);
@@ -18,10 +19,8 @@ function PlayMode(gs) {
 		character.move(1*(gs.keysDown[39]-gs.keysDown[37]),1*(gs.keysDown[40]-gs.keysDown[38]));
 		draw();
 		for (i=0; i<coins.length; i++)
-			if (coins[i].collide()) {
-				coins[i].destroy();
+			if (coins[i].collide())
 				coins[i] = new Coin(gs);
-			}
 		gs.clearCollisionMap();
 	}
 

@@ -44,7 +44,7 @@ GameState.prototype.getSprite = function(spriteName) {
 			imgs.push(img);
 			LoadingMode.waitFor(img);
 		}
-		anims[anim] = new GameState.Animation(imgs, info[anim]);
+		anims[anim] = new this.Animation(imgs, info[anim]);
 	}
-	return new GameState.Sprite(anims);
+	return new this.Sprite(anims);
 };

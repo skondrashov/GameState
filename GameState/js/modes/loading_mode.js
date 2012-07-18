@@ -1,4 +1,5 @@
 function LoadingMode(loadingFunctions,gs) {
+	"use strict";
 	var halt = 0;
 	var frameCount = 0;
 
@@ -30,10 +31,6 @@ function LoadingMode(loadingFunctions,gs) {
 			};
 		}
 	}
-
-	this.destroy = function() {
-		
-	};
 }
 
 LoadingMode.waitFor = function() {};	// we want to avoid undefined calls to waitFor... just in case.

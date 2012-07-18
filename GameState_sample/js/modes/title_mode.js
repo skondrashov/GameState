@@ -1,4 +1,5 @@
 function TitleMode(gs) {
+	"use strict";
 	// CONSTRUCTOR
 	// this is the image of the game logo
 	var title = {
@@ -34,7 +35,7 @@ function TitleMode(gs) {
 			"y":gs.getHeight()/2+40
 		}
 	};
-
+	var img;
 	for (img in titleButtons)
 		titleButtons[img].img = gs.getImage(img+'_button.png');
 	for (img in optionButtons)
@@ -59,7 +60,6 @@ function TitleMode(gs) {
 			switch (button)
 			{
 			case 'play':
-				menuSound.stop();
 				menuSound.play();
 				music.stop();
 				gs.loadMode(new LoadingMode([
@@ -74,7 +74,6 @@ function TitleMode(gs) {
 				gs.setMode('load');
 				break;
 			case 'options':
-				menuSound.stop();
 				menuSound.play();
 				gs.clearCollisionMap();
 				setButtons(optionButtons);
@@ -82,30 +81,27 @@ function TitleMode(gs) {
 				break;
 			}
 		}
-		title.img.draw(title.x-title.img.width/2,title.y);
+		gs.drawImage(title.img,title.x-title.img.width/2,title.y);
 		for (img in titleButtons)
-			titleButtons[img].img.draw(titleButtons[img].x-titleButtons[img].img.width/2,titleButtons[img].y-titleButtons[img].img.height/2);
+			gs.drawImage(titleButtons[img].img,titleButtons[img].x-titleButtons[img].img.width/2,titleButtons[img].y-titleButtons[img].img.height/2);
 	}
 
 	function optionsScreen() {
 		if (gs.mousePressed) {
-			var button = gs.getCollision(gs.mousePressed[0],gs.mousePressed[1]);
+			var button = gs.getCollision(gs.mousePosition[0],gs.mousePosition[1]);
 			switch (button)
 			{
 			case 'fullscreen':
-				menuSound.stop();
 				menuSound.play();
 				gs.style.border='none';
 				gs.setResolution(gs.getWidth(),gs.getHeight(),true);
 				break;
 			case 'actual':
-				menuSound.stop();
 				menuSound.play();
 				gs.style.border='ridge';
 				gs.setResolution(gs.getWidth(),gs.getHeight());
 				break;
 			case 'back':
-				menuSound.stop();
 				menuSound.play();
 				gs.clearCollisionMap();
 				setButtons(titleButtons);
@@ -113,9 +109,9 @@ function TitleMode(gs) {
 				break;
 			}
 		}
-		title.img.draw(title.x-title.img.width/2,title.y);
+		gs.drawImage(title.img,title.x-title.img.width/2,title.y);
 		for (img in optionButtons)
-			optionButtons[img].img.draw(optionButtons[img].x-optionButtons[img].img.width/2,optionButtons[img].y-optionButtons[img].img.height/2);
+			gs.drawImage(optionButtons[img].img,optionButtons[img].x-optionButtons[img].img.width/2,optionButtons[img].y-optionButtons[img].img.height/2);
 	}
 	// END SCREENS
 
@@ -129,18 +125,4 @@ function TitleMode(gs) {
 			}
 		}
 	}
-
-	// DESTRUCTOR
-	this.destroy = function() {
-		title.img.destroy();
-		for (img in titleButtons)
-			titleButtons[img].img.destroy();
-		for (img in optionButtons)
-			optionButtons[img].img.destroy();
-		delete title;
-		delete titleButtons;
-		delete optionButtons;
-		menuSound.destroy();
-		delete this;
-	};
 }

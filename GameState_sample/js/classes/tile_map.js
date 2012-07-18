@@ -1,4 +1,5 @@
 function TileMap(gs) {
+	"use strict";
 	var i,j;	// iterators
 	var tiles = [
 		gs.getImage('grass0.png'),
@@ -25,7 +26,7 @@ function TileMap(gs) {
 	this.draw = function() {
 		for (i=0; i<gs.getWidth(); i+=32) {
 			for (j=0;j<gs.getHeight(); j+=32) {
-				tiles[tileMap[i/32][j/32]].draw(i,j);
+				gs.drawImage(tiles[tileMap[i/32][j/32]],i,j);
 			}
 		}
 	};

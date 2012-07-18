@@ -1,4 +1,5 @@
 function Coin(gs) {
+	"use strict";
 	var x = (0|(Math.random()*gs.getWidth()-32)/32)*32;
 	var y = (0|(Math.random()*gs.getHeight()-32)/32)*32;
 	var sound = gs.getSound('collect.wav');
@@ -17,10 +18,5 @@ function Coin(gs) {
 					return true;
 				}
 		return false;
-	};
-
-	this.destroy = function() {
-		sound.destroy();
-		sprite.destroy();
 	};
 }
